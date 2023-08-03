@@ -1,33 +1,26 @@
 USE workingmindsdb;
 
-CREATE TABLE people (
+CREATE TABLE employee (
     id INT NOT NULL AUTO_INCREMENT,
-    first_name VARCHAR(45) NOT NULL,
-    last_name VARCHAR(45) NOT NULL,
-    email VARCHAR(60) NOT NULL,
-    phone VARCHAR(20),
+    name VARCHAR(45) NOT NULL,
+    role VARCHAR(45) NOT NULL,
+    hiring_date DATE NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at DATETIME,
     PRIMARY KEY(id),
-    UNIQUE(email)
+    UNIQUE(id)
 );
 
-CREATE TABLE transactions(
+CREATE TABLE vacation (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(60) NOT NULL,
-    description VARCHAR(100),
-    price DECIMAL(10,2) NOT NULL,
-    type INT NOT NULL,
-    person_id INT NOT NULL,
+    start DATE NOT NULL,
+    end DATE NOT NULL,
+    employee_id INT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at DATETIME,
     PRIMARY KEY(id),
-    CONSTRAINT fk_transaction_person_id FOREIGN KEY (person_id)
-    REFERENCES people(id)
-);
-
-CREATE TABLE logs(
-    id INT NOT NULL AUTO_INCREMENT,
-    event VARCHAR(100) NOT NULL,
-    timestamp BIGINT NOT NULL,
-    person_id INT NOT NULL,
-    PRIMARY KEY(id),
-    CONSTRAINT fk_logs_person_id FOREIGN KEY (person_id)
-    REFERENCES people(id)
+    UNIQUE(id),
+    CONSTRAINT fk_vacation_employee FOREIGN KEY (employee_id) REFERENCES employee(id)
 );

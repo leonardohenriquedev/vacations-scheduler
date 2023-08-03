@@ -33,11 +33,12 @@ services:
 
   database:
     image: mysql:8.0.29
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: workingmindsdb
+    container_name: workingminds_database
+    # restart: always
     ports:
-      - "33060:3306"
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: workingmindsdb
     volumes:
       - ./workingminds_script.sql:/docker-entrypoint-initdb.d/workingminds_script.sql
